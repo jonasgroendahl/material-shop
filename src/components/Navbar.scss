@@ -1,0 +1,18 @@
+.Navbar {
+  &.MuiAppBar-root {
+    z-index: 1301;
+  }
+
+  .ghost {
+    flex-grow: 1;
+  }
+
+  .logo-div + button {
+    /* The first category link next to logo div */
+    margin-left: 1.2rem;
+  }
+
+  .MuiToolbar-root > button > span > span {
+    line-height: initial;
+  }
+}
