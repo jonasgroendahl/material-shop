@@ -1,7 +1,7 @@
 import React from "react";
 import { ListItem, List, ListSubheader, Grid } from "@material-ui/core";
 
-export default React.memo(function NavItems({ items, isMobile = false }) {
+export default React.memo(function NavItems({ items, isMobile = false, onClick }) {
   function getSubCategories() {
     console.log("Getting sub categories...", isMobile);
 
@@ -22,7 +22,9 @@ export default React.memo(function NavItems({ items, isMobile = false }) {
       {Object.keys(subCategories).map(sub => (
         <List subheader={<ListSubheader>{sub}</ListSubheader>} key={sub}>
           {subCategories[sub].map(product => (
-            <ListItem key={product.name}>{product.name}</ListItem>
+            <ListItem button key={product.name} onClick={() => onClick(`/product/${product.id}`)}>
+              {product.name}
+            </ListItem>
           ))}
         </List>
       ))}

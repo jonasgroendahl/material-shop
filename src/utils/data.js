@@ -9,16 +9,34 @@ const products = [];
 
 const categories = [];
 
+const urls = [
+  "",
+  "https://cdn.dribbble.com/users/815278/screenshots/2375130/random-turtle.gif",
+  "https://pbs.twimg.com/profile_images/1136828571341733888/BrRTfqQb_400x400.png",
+  "https://www.online-stopwatch.com/images/eggs.png",
+  "https://404store.com/2017/12/08/randomshots059.jpg"
+];
+
 for (let i = 0; i < 30; i++) {
   const product = faker.commerce.product();
   const obj = {
+    id: faker.random.uuid(),
     name: faker.commerce.productName(),
     price: faker.commerce.price(),
     color: faker.commerce.color(),
     product,
     adj: faker.commerce.productAdjective(),
-    subcategory: faker.commerce.productMaterial()
+    subcategory: faker.commerce.productMaterial(),
+    description: faker.company.catchPhraseDescriptor(),
+    images: []
   };
+
+  const randomAmountOfExtra = Math.floor(Math.random() * 5) + 1;
+
+  for (let i = 0; i < randomAmountOfExtra; i++) {
+    const randomImage = Math.floor(Math.random() * 4) + 1;
+    obj.images.push(urls[randomImage]);
+  }
 
   if (categories.length > 5) {
     const randomCategory = Math.floor(Math.random() * categories.length);

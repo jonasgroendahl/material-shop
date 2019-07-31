@@ -1,0 +1,23 @@
+.ProductImageGrid {
+  .selected-image-container {
+    position: relative;
+
+    img {
+      width: 100%;
+      display: block;
+      height: 40vh;
+    }
+
+    .arrow-div {
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      top: 0;
+      display: none;
+    }
+  }
+}
