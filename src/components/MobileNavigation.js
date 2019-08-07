@@ -31,7 +31,7 @@ export default function MobileNavigation({ menuItems, onClick }) {
   return (
     <div>
       <IconButton onClick={handleClick}>{open ? <Close /> : <Menu />}</IconButton>
-      <Drawer open={open} className="MobileNavigation">
+      <Drawer open={open} className="MobileNavigation" hideBackdrop style={{ top: 56 }}>
         <List>
           {!selectedCategory ? (
             menuItems.map((point, index) => (

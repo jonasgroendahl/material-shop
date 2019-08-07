@@ -15,3 +15,14 @@ main {
   padding: 20px;
   max-width: 80vw;
 }
+
+.zi1302 {
+  z-index: 1302;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 10px;
+    max-width: 95vw;
+  }
+}

@@ -34,6 +34,9 @@ function reducer(state, action) {
       const index = state.cart.findIndex(cartItem => cartItem.id === payload.productId);
       newState.cart[index].qty = payload.value;
       return newState;
+    case "DELETE_ITEM":
+      const newCart = state.cart.filter(cartItem => cartItem.id !== payload.productId);
+      return { ...state, cart: newCart };
     default:
       return state;
   }

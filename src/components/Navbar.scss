@@ -1,10 +1,11 @@
 .Navbar {
-  &.MuiAppBar-root {
-    z-index: 1301;
-  }
-
   .ghost {
     flex-grow: 1;
+  }
+
+  button {
+    text-transform: none;
+    font-weight: 400;
   }
 
   .logo-div + button {

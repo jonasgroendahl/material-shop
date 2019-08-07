@@ -6,10 +6,11 @@ import {
   Grid,
   ListItemAvatar,
   Avatar,
-  ListItemSecondaryAction,
   Select,
-  InputLabel
+  InputLabel,
+  IconButton
 } from "@material-ui/core";
+import { Delete } from "@material-ui/icons";
 
 const options = [...Array(10)].map((_, index) => <option key={index}>{index + 1}</option>);
 
@@ -26,10 +27,10 @@ export default function CartItems({ cart, dispatch, editable = true }) {
       {cart.map(cartItem => (
         <ListItem alignItems="flex-start" key={cartItem.id}>
           <ListItemAvatar>
-            <Avatar src={cartItem.images[0]} style={{ width: 100, height: 100 }} />
+            <Avatar src={cartItem.images[0]} style={{ width: 80, height: 80 }} />
           </ListItemAvatar>
           <ListItemText primary={cartItem.name} />
-          <ListItemSecondaryAction>
+          <div style={{ marginLeft: "auto" }}>
             <Grid container direction="column">
               <Typography gutterBottom>${cartItem.price}</Typography>
               <div>
@@ -38,6 +39,7 @@ export default function CartItems({ cart, dispatch, editable = true }) {
                   <Select
                     native
                     value={cartItem.qty}
+                    fullWidth
                     onChange={e =>
                       dispatch({
                         type: "SET_QTY",
@@ -55,7 +57,23 @@ export default function CartItems({ cart, dispatch, editable = true }) {
                 )}
               </div>
             </Grid>
-          </ListItemSecondaryAction>
+          </div>
+          <div style={{ marginLeft: 5, alignSelf: "center" }}>
+            {editable ? (
+              <IconButton
+                onClick={() =>
+                  dispatch({
+                    type: "DELETE_ITEM",
+                    payload: {
+                      productId: cartItem.id
+                    }
+                  })
+                }
+              >
+                <Delete />
+              </IconButton>
+            ) : null}
+          </div>
         </ListItem>
       ))}
     </>

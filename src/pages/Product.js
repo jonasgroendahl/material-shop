@@ -3,6 +3,8 @@ import { Grid } from "@material-ui/core";
 import ProductInfo from "../components/ProductPage/ProductInfo";
 import ProductImageGrid from "../components/ProductPage/ProductImageGrid";
 import Context from "../utils/Context";
+import AdditionalInfo from "../components/ProductPage/AdditionalInfo";
+import Spacer from "../components/Spacer";
 
 export default function Product({ match }) {
   const { products } = useContext(Context);
@@ -29,6 +31,8 @@ export default function Product({ match }) {
           <ProductInfo {...product} />
         </Grid>
       </Grid>
+      <Spacer mt={50} />
+      <AdditionalInfo />
     </div>
   );
 }

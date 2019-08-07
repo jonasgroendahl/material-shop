@@ -1,23 +1,37 @@
 .ProductImageGrid {
   .selected-image-container {
-    position: relative;
-
-    img {
+    .selected-image {
       width: 100%;
       display: block;
       height: 40vh;
+      cursor: zoom-in;
+      object-fit: contain;
     }
 
-    .arrow-div {
-      position: absolute;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-      left: 0;
-      top: 0;
-      display: none;
+    .image-list {
+      .image-list-item {
+        margin: 5px;
+
+        img {
+          height: 62px;
+          width: 62px;
+          cursor: pointer;
+          border: 1px solid #eee;
+        }
+
+        &.selected img {
+          border: 1px solid black;
+        }
+      }
     }
+  }
+}
+
+@media (max-width: 600px) {
+  .selected-image {
+    height: auto !important;
+  }
+  .image-list {
+    flex-direction: row;
   }
 }

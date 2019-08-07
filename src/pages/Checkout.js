@@ -11,18 +11,28 @@ import {
   Typography,
   InputAdornment
 } from "@material-ui/core";
-import {
-  CreditCard,
-  AccountCircle,
-  LocationCity,
-  Public,
-  LocationOn,
-  Place,
-  LocalPostOffice
-} from "@material-ui/icons";
+import { AccountCircle, LocationCity, Public, Place, LocalPostOffice } from "@material-ui/icons";
 import "./Checkout.scss";
+import { CardElement, injectStripe } from "react-stripe-elements";
+import { API_URL } from "../utils/data";
+import { calculateTotal } from "../utils/functions";
 
-export default function Checkout() {
+const stripeDivStyles = {
+  base: {
+    color: "#424770",
+    letterSpacing: "0.025em",
+    fontFamily: "Source Code Pro, monospace",
+    "::placeholder": {
+      color: "#aab7c4"
+    },
+    padding: 5
+  },
+  invalid: {
+    color: "#9e2146"
+  }
+};
+
+function Checkout({ stripe }) {
   const { dispatch, cart } = useContext(Context);
   const [shippingInfo, setShippingInfo] = useState({
     name: "",
@@ -36,7 +46,22 @@ export default function Checkout() {
     setShippingInfo({ ...shippingInfo, [e.target.name]: e.target.value });
   }
 
-  const total = cart.reduce((acc, cur) => acc + cur.price * cur.qty, 0);
+  async function submitPayment() {
+    let { token } = await stripe.createToken({ name: "Test" });
+    console.log(token);
+    if (!token) {
+      console.log("Wrong details");
+      return;
+    }
+    const response = await fetch(`${API_URL}/payment`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(token)
+    });
+    console.log(response);
+  }
 
   return (
     <div className="Checkout">
@@ -112,23 +137,15 @@ export default function Checkout() {
             </Grid>
           </Paper>
           <Paper>
-            <div className="credit-card-div" style={{ padding: 15 }}>
-              <CreditCard />
-              <TextField
-                label="Card number"
-                className="credit-card-number"
-                placeholder="2424 2424 2424 2424"
-              />
-              <TextField label="MM" inputProps={{ maxLength: 2 }} />
-              <TextField label="YY" inputProps={{ maxLength: 2 }} />
-              <TextField label="CVC" inputProps={{ maxLength: 3 }} />
+            <div style={{ padding: 15 }}>
+              <CardElement hidePostalCode style={stripeDivStyles} />
             </div>
             <Divider />
             <div style={{ padding: 15, textAlign: "right" }}>
               <div>
-                <Typography variant="caption">{`Total:   $${total}`}</Typography>
+                <Typography variant="caption">{`Total:   $${calculateTotal(cart)}`}</Typography>
               </div>
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" onClick={submitPayment}>
                 Confirm order
               </Button>
             </div>
@@ -138,3 +155,5 @@ export default function Checkout() {
     </div>
   );
 }
+
+export default injectStripe(Checkout);

@@ -9,13 +9,14 @@ import {
   Badge
 } from "@material-ui/core";
 import { categories } from "../utils/data";
-import { ShoppingCart, Help, Public, ExpandMore, ExpandLess } from "@material-ui/icons";
+import { ShoppingCart, Public, ExpandMore, ExpandLess } from "@material-ui/icons";
 import "./Navbar.scss";
 import NavDrawer from "./NavDrawer";
 import MobileNavigation from "./MobileNavigation";
 import SearchField from "./SearchField";
 import Context from "../utils/Context";
 import { Link, withRouter } from "react-router-dom";
+import UserButton from "./UserButton";
 
 function Navbar({ history }) {
   const { products, cart } = useContext(Context);
@@ -51,9 +52,10 @@ function Navbar({ history }) {
         )}
         <div className="logo-div">
           <Link to="/">
-            <Avatar>
-              <Public />
-            </Avatar>
+            <img
+              src="http://pluspng.com/img-png/png-logo-design-fancy-png-logo-design-91-on-professional-logo-design-with-png-logo-design-734.png"
+              height={40}
+            />
           </Link>
         </div>
         {!isMobile
@@ -66,9 +68,7 @@ function Navbar({ history }) {
           : null}
         <div className="ghost" />
         <SearchField products={products} onRedirect={closeDrawer} isMobile={isMobile} />
-        <IconButton>
-          <Help />
-        </IconButton>
+        <UserButton />
         <Badge badgeContent={cart.length} invisible={cart.length === 0} color="primary">
           <Link to="/cart">
             <IconButton>
@@ -79,7 +79,7 @@ function Navbar({ history }) {
       </Toolbar>
       <NavDrawer
         category={selectedCategory}
-        items={products.filter(cat => cat.product === selectedCategory)}
+        items={products.filter(cat => cat.category === selectedCategory)}
         onClick={closeDrawer}
       />
     </AppBar>
